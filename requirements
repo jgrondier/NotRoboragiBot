@@ -1,0 +1,11 @@
+beautifulsoup4==4.6.0
+bs4==0.0.1
+certifi==2017.7.27.1
+chardet==3.0.4
+future==0.16.0
+idna==2.5
+PyMoe==0.9.1
+python-telegram-bot==7.0.1
+requests==2.18.2
+ujson==1.35
+urllib3==1.22
