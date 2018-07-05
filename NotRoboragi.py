@@ -32,7 +32,7 @@ def format_caption(url, medium):
     except KeyError:
         pass
 
-    caption = "<b>{}</b>\n<i>{}</i>\n{}/{}/".format(romaji_title, english_title, url, medium['id'])
+    caption = "*{}*\n_{}_ \n{}/{}/".format(romaji_title, english_title, url, medium['id'])
 
     return caption
 
@@ -47,7 +47,7 @@ def search(bot, update):
 
         update.message.reply_photo(photo=anime['coverImage']['large'],
                                    caption=format_caption(url['anime'], anime),
-                                   parse_mode="html")
+                                   parse_mode="markdown")
         return
 
     temp_manga = re.search(r'\[\[(.*?)\]\]', update.message.text)
@@ -56,7 +56,7 @@ def search(bot, update):
         manga = instance.search.manga(temp_manga.group(1))['data']['Page']['media'][0]
         update.message.reply_photo(photo=manga['coverImage']['large'],
                                    caption=format_caption(url['manga'], manga),
-                                   parse_mode="html")
+                                   parse_mode="markdown")
         return
 
 
