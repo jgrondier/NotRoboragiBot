@@ -5,7 +5,10 @@ from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 import re, pprint, configparser
 from Pymoe import Mal, Anilist
 import logging
-
+from telegram import InlineQueryResultArticle, InputTextMessageContent
+from telegram.ext.dispatcher import run_async
+from telegram.ext import Updater, CommandHandler, CallbackQueryHandler, InlineQueryHandler
+from uuid import uuid4
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 conf = configparser.ConfigParser()
 conf.read("config")
@@ -19,6 +22,27 @@ url = {
     'manga': "https://anilist.co/manga"
 }
 
+
+@run_async
+def inlinequery(bot, update):
+    query = update.inline_query.query
+    results = list()
+
+    animes = instance.search.anime(query)['data']['Page']['media']
+
+    print([anime['title'] for anime in animes])
+
+    for anime in animes:
+        t = "{}/{}".format(url['anime'], anime['id'])
+
+        results.append(InlineQueryResultArticle(id=uuid4(),
+                                                title=anime['title']['romaji'],
+                                                input_message_content=InputTextMessageContent(t),
+                                                url=t,
+                                                thumb_url=anime['coverImage']['large'],
+                                                description=anime['title']['english']))
+
+    update.inline_query.answer(results)
 
 def format_caption(url, medium):
     english_title, romaji_title = '', ''
@@ -67,7 +91,7 @@ def main():
     dp = updater.dispatcher
 
     dp.add_handler(MessageHandler(Filters.text, search))
-
+    dp.add_handler(InlineQueryHandler(inlinequery))
     # Start the Bot
     updater.start_polling()
 
