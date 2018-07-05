@@ -1,14 +1,17 @@
 __author__ = "jgrondier"
 __copyright__ = "Copyright 2017"
 
-from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
-import re, pprint, configparser
-from Pymoe import Mal, Anilist
+import configparser
 import logging
-from telegram import InlineQueryResultArticle, InputTextMessageContent
-from telegram.ext.dispatcher import run_async
-from telegram.ext import Updater, CommandHandler, CallbackQueryHandler, InlineQueryHandler
+import re
 from uuid import uuid4
+
+from Pymoe import Anilist
+from telegram import InlineQueryResultArticle, InputTextMessageContent
+from telegram.ext import MessageHandler, Filters
+from telegram.ext import Updater, InlineQueryHandler
+from telegram.ext.dispatcher import run_async
+
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 conf = configparser.ConfigParser()
 conf.read("config")
