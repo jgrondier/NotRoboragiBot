@@ -40,7 +40,7 @@ def inlinequery(bot, update):
 
         results.append(InlineQueryResultArticle(id=uuid4(),
                                                 title=anime['title']['romaji'],
-                                                input_message_content=InputTextMessageContent(format_caption(url['anime'], anime)),
+                                                input_message_content=InputTextMessageContent(format_caption(url['anime'], anime), parse_mode="Markdown"),
                                                 url=t,
                                                 thumb_url=anime['coverImage']['large'],
                                                 description=anime['title']['english']))
